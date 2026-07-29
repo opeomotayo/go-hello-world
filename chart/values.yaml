@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: opeomotayo/go-hello-world
-  tag: 10
+  tag: <+pipeline.sequenceId>
   pullPolicy: IfNotPresent
 
 service:
