@@ -1,16 +1,12 @@
-# ---- build stage ----
-FROM golang:1.26-alpine AS builder
-WORKDIR /app
-COPY go.mod ./
-RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o go-hello-world main.go
+# The binary is already built and restored from MinIO (see the
+# "Restore Artefact and Publish Image" stage) before this Dockerfile
+# runs - no need to compile it again inside the image.
 
-# ---- runtime stage ----
 FROM alpine:3.20
 RUN adduser -D -g '' appuser
 WORKDIR /app
-COPY --from=builder /app/go-hello-world .
+COPY go-hello-world .
+RUN chmod +x go-hello-world
 USER appuser
 EXPOSE 8080
 ENTRYPOINT ["./go-hello-world"]
