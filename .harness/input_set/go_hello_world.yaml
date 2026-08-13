@@ -1,0 +1,28 @@
+inputSet:
+  pipeline:
+    identifier: gohelloworld
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: main
+    stages:
+      - stage:
+          identifier: Deploy_PreProd
+          type: Deployment
+          spec:
+            service:
+              serviceInputs:
+                serviceDefinition:
+                  type: Kubernetes
+                  spec:
+                    artifacts:
+                      primary:
+                        primaryArtifactRef: Go_Hello_World_Artifact
+                        sources: ""
+  name: go_hello_world
+  identifier: go_hello_world
+  orgIdentifier: default
+  projectIdentifier: default_project
